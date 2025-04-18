@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { EpubParser, EpubContent } from '../utils/epub-parser';
-import { MarkdownConverter, MarkdownOutput, MarkdownConverterOptions } from '../utils/md-converter';
+import { EpubParser } from '../utils/epub-parser';
+import { MarkdownConverter, MarkdownConverterOptions } from '../utils/md-converter';
 import { DownloadManager, DownloadOptions } from '../utils/download';
 
 export interface ConversionProgress {
@@ -108,29 +108,29 @@ export function useEpubConverter(): [EpubConverterState, EpubConverterActions] {
       if (isCancelled) break;
 
       const file = files[i];
-      
+
       try {
         // Update status to parsing
         updateProgress(i, { status: 'parsing', progress: 10 });
-        
+
         // Parse EPUB
         const parser = new EpubParser();
         const epubContent = await parser.parse(file);
-        
+
         if (isCancelled) break;
-        
+
         // Update status to converting
         updateProgress(i, { status: 'converting', progress: 50 });
-        
+
         // Convert to Markdown
         const converter = new MarkdownConverter(options.markdown);
         const markdownOutput = converter.convert(epubContent);
-        
+
         if (isCancelled) break;
-        
+
         // Update status to downloading
         updateProgress(i, { status: 'downloading', progress: 80 });
-        
+
         // Download the converted content
         const downloadManager = new DownloadManager();
         const downloadOptions = {
@@ -138,14 +138,14 @@ export function useEpubConverter(): [EpubConverterState, EpubConverterActions] {
           filename: options.download.filename || file.name.replace(/\.epub$/, '')
         };
         await downloadManager.downloadMarkdown(markdownOutput, downloadOptions);
-        
+
         // Update status to completed
         updateProgress(i, { status: 'completed', progress: 100 });
       } catch (error) {
         // Update status to error
-        updateProgress(i, { 
-          status: 'error', 
-          progress: 0, 
+        updateProgress(i, {
+          status: 'error',
+          progress: 0,
           error: error instanceof Error ? error.message : String(error)
         });
       }
@@ -181,14 +181,14 @@ export function useEpubConverter(): [EpubConverterState, EpubConverterActions] {
 
   return [
     { files, progress, options },
-    { 
-      addFiles, 
-      removeFile, 
-      clearFiles, 
-      convertFiles, 
-      cancelConversion, 
-      updateMarkdownOptions, 
-      updateDownloadOptions 
+    {
+      addFiles,
+      removeFile,
+      clearFiles,
+      convertFiles,
+      cancelConversion,
+      updateMarkdownOptions,
+      updateDownloadOptions
     }
   ];
 }

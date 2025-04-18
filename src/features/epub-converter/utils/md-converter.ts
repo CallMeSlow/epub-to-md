@@ -53,13 +53,13 @@ export class MarkdownConverter {
   convert(epubContent: EpubContent): MarkdownOutput {
     // Generate README.md with book metadata
     const readme = this.generateReadme(epubContent);
-    
+
     // Generate SUMMARY.md with table of contents
     const summary = this.generateSummary(epubContent.toc);
-    
+
     // Convert chapters to Markdown
     const chapters = this.convertChapters(epubContent.chapters, epubContent.images);
-    
+
     return {
       readme,
       summary,
@@ -74,48 +74,48 @@ export class MarkdownConverter {
   private generateReadme(epubContent: EpubContent): string {
     const { metadata } = epubContent;
     let readme = `# ${metadata.title}\n\n`;
-    
+
     if (metadata.creator) {
       readme += `> 作者：${metadata.creator}\n>\n`;
     }
-    
+
     if (metadata.publisher) {
       readme += `> 出版商：${metadata.publisher}\n>\n`;
     }
-    
+
     readme += `> 转换时间：${new Date().toLocaleDateString()}\n\n`;
-    
+
     if (metadata.description) {
       readme += `## 简介\n\n${metadata.description}\n\n`;
     }
-    
+
     readme += `## 目录\n\n`;
-    
+
     // Add a simplified table of contents
     epubContent.toc.forEach(item => {
       const indent = '  '.repeat(item.level - 1);
       readme += `${indent}- [${item.title}](${this.getChapterFilename(item.id)})\n`;
-      
+
       // Add children
-      this.addTocChildrenToReadme(item.children, readme, item.level);
+      this.addTocChildrenToReadme(item.children, readme);
     });
-    
+
     return readme;
   }
 
   /**
    * Add TOC children to README recursively
    */
-  private addTocChildrenToReadme(children: EpubTocItem[], readme: string, parentLevel: number): string {
+  private addTocChildrenToReadme(children: EpubTocItem[], readme: string): string {
     children.forEach(child => {
       const indent = '  '.repeat(child.level - 1);
       readme += `${indent}- [${child.title}](${this.getChapterFilename(child.id)})\n`;
-      
+
       if (child.children.length > 0) {
-        this.addTocChildrenToReadme(child.children, readme, child.level);
+        this.addTocChildrenToReadme(child.children, readme);
       }
     });
-    
+
     return readme;
   }
 
@@ -124,17 +124,17 @@ export class MarkdownConverter {
    */
   private generateSummary(toc: EpubTocItem[]): string {
     let summary = `# 目录\n\n`;
-    
+
     toc.forEach(item => {
       const indent = '  '.repeat(item.level - 1);
       summary += `${indent}- [${item.title}](${this.getChapterFilename(item.id)})\n`;
-      
+
       // Add children
       if (item.children.length > 0) {
         this.addTocChildrenToSummary(item.children, summary);
       }
     });
-    
+
     return summary;
   }
 
@@ -145,12 +145,12 @@ export class MarkdownConverter {
     children.forEach(child => {
       const indent = '  '.repeat(child.level - 1);
       summary += `${indent}- [${child.title}](${this.getChapterFilename(child.id)})\n`;
-      
+
       if (child.children.length > 0) {
         this.addTocChildrenToSummary(child.children, summary);
       }
     });
-    
+
     return summary;
   }
 
@@ -161,14 +161,14 @@ export class MarkdownConverter {
     return chapters.map(chapter => {
       // Convert HTML to Markdown
       let content = this.turndownService.turndown(chapter.content);
-      
+
       // Process images based on options
       if (this.options.imageHandling === 'inline') {
         content = this.processInlineImages(content, images);
       } else {
         content = this.processExternalImages(content, images);
       }
-      
+
       return {
         id: chapter.id,
         title: chapter.title,
@@ -188,7 +188,7 @@ export class MarkdownConverter {
       const regex = new RegExp(`!\\[.*?\\]\\(.*${image.filename.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}.*?\\)`, 'g');
       content = content.replace(regex, `![${image.filename}](data:${image.mimeType};base64,${image.data})`);
     });
-    
+
     return content;
   }
 
@@ -201,7 +201,7 @@ export class MarkdownConverter {
       const regex = new RegExp(`!\\[.*?\\]\\(.*${image.filename.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}.*?\\)`, 'g');
       content = content.replace(regex, `![${image.filename}](./images/${image.filename})`);
     });
-    
+
     return content;
   }
 
@@ -219,7 +219,7 @@ export class MarkdownConverter {
     // Handle tables better
     this.turndownService.addRule('tables', {
       filter: ['table'],
-      replacement: function(content, node) {
+      replacement: function(content) {
         // This is a simplified example - a real implementation would be more complex
         const tableContent = content.trim();
         return '\n\n' + tableContent + '\n\n';

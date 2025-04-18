@@ -54,31 +54,31 @@ export class EpubParser {
     try {
       // Load the EPUB file as a zip archive
       this.zip = await JSZip.loadAsync(file);
-      
+
       // Find the root file (container.xml)
       await this.findRootFile();
-      
+
       // Parse the OPF file
       await this.parseOpf();
-      
+
       // Parse the NCX file (table of contents)
       await this.parseNcx();
-      
+
       // Extract metadata
       const metadata = await this.extractMetadata();
-      
+
       // Extract chapters
       const chapters = await this.extractChapters();
-      
+
       // Extract images
       const images = await this.extractImages();
-      
+
       // Extract table of contents
       const toc = await this.extractToc();
-      
+
       // Find and extract cover image
       await this.extractCoverImage(metadata);
-      
+
       return {
         metadata,
         chapters,
@@ -107,7 +107,7 @@ export class EpubParser {
     const containerContent = await containerFile.async('text');
     const parser = new DOMParser();
     const containerDoc = parser.parseFromString(containerContent, 'application/xml');
-    
+
     const rootFilePath = containerDoc.querySelector('rootfile')?.getAttribute('full-path');
     if (!rootFilePath) {
       throw new Error('Invalid EPUB: rootfile path not found in container.xml');
@@ -253,12 +253,12 @@ export class EpubParser {
       if (!file) continue;
 
       const content = await file.async('text');
-      
+
       // Extract title from the HTML content
       const parser = new DOMParser();
       const doc = parser.parseFromString(content, 'text/html');
-      let title = doc.querySelector('title')?.textContent || 
-                  doc.querySelector('h1')?.textContent || 
+      const title = doc.querySelector('title')?.textContent ||
+                  doc.querySelector('h1')?.textContent ||
                   `Chapter ${order + 1}`;
 
       chapters.push({
@@ -329,7 +329,7 @@ export class EpubParser {
     navPoints.forEach(navPoint => {
       const id = navPoint.getAttribute('id') || '';
       const labelText = navPoint.querySelector('navLabel text')?.textContent || '';
-      
+
       const item: EpubTocItem = {
         id,
         title: labelText,
@@ -358,7 +358,7 @@ export class EpubParser {
     }
 
     // Try to find cover image in different ways
-    
+
     // Method 1: Look for meta element with name="cover"
     const coverMeta = this.opfContent.querySelector('metadata meta[name="cover"]');
     if (coverMeta) {
