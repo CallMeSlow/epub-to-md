@@ -1,0 +1,58 @@
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  color: white;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.description {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  margin-bottom: 0;
+  max-width: 450px;
+  line-height: 1.5;
+}
+
+.uploadCard {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.previewCard {
+  width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
+  }
+
+  .title {
+    color: white;
+  }
+
+  .description {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}

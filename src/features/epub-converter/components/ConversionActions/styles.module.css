@@ -1,0 +1,74 @@
+.container {
+  width: 100%;
+  max-width: 450px;
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 24px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.primaryButton {
+  background-color: #4dabf7;
+  color: white;
+  flex: 1;
+  box-shadow: 0 4px 12px rgba(77, 171, 247, 0.2);
+}
+
+.primaryButton:hover:not(:disabled) {
+  background-color: #339af0;
+  box-shadow: 0 6px 18px rgba(77, 171, 247, 0.35);
+  transform: translateY(-1px);
+}
+
+.secondaryButton {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #4b5563;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background-color: #f0f0f0;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .primaryButton {
+    background-color: #4dabf7;
+  }
+
+  .primaryButton:hover:not(:disabled) {
+    background-color: #339af0;
+  }
+
+  .secondaryButton {
+    background-color: #333;
+    color: #e0e0e0;
+  }
+
+  .secondaryButton:hover:not(:disabled) {
+    background-color: #444;
+  }
+}

@@ -1,0 +1,160 @@
+.container {
+  width: 100%;
+  max-width: 450px;
+  margin-top: 1rem;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.header:hover {
+  background-color: rgba(77, 171, 247, 0.05);
+  border-bottom-color: #e0e0e0;
+}
+
+.title {
+  font-size: 1.1rem;
+  margin: 0;
+  color: #333;
+}
+
+.expandButton {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.content {
+  padding: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.section {
+  margin-bottom: 1.5rem;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  font-size: 0.9rem;
+  margin: 0 0 0.75rem 0;
+  color: #555;
+  font-weight: 600;
+}
+
+.optionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.radioOption {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.radioOption input[type="radio"] {
+  accent-color: #4dabf7;
+}
+
+.radioOption label {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.inputGroup label {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.textInput {
+  padding: 0.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.textInput:focus {
+  border-color: #4dabf7;
+  box-shadow: 0 0 0 2px rgba(77, 171, 247, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    background-color: #1a1a1a;
+    border-color: #333;
+  }
+
+  .header {
+    border-bottom-color: #333;
+  }
+
+  .header:hover {
+    background-color: rgba(168, 85, 247, 0.1);
+  }
+
+  .title {
+    color: #e0e0e0;
+  }
+
+  .expandButton {
+    color: #aaa;
+  }
+
+  .content {
+    border-top-color: #333;
+  }
+
+  .sectionTitle {
+    color: #bbb;
+  }
+
+  .radioOption label {
+    color: #e0e0e0;
+  }
+
+  .inputGroup label {
+    color: #bbb;
+  }
+
+  .textInput {
+    background-color: #222;
+    border-color: #444;
+    color: #e0e0e0;
+  }
+
+  .textInput:focus {
+    border-color: var(--purple-light);
+    box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.1);
+  }
+}

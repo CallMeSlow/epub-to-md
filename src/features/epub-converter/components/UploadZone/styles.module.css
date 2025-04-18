@@ -1,0 +1,128 @@
+.uploadZone {
+  width: 100%;
+  max-width: 450px;
+  min-height: 100px;
+  border: 2px dashed #e0e0e0;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: white;
+  position: relative;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.uploadZone:hover {
+  border-color: #4dabf7;
+  background-color: rgba(77, 171, 247, 0.05);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.dragging {
+  border-color: #4dabf7;
+  background-color: rgba(77, 171, 247, 0.08);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.iconContainer {
+  position: relative;
+  margin-bottom: 0.5rem;
+  width: 60px;
+  height: 60px;
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(77, 171, 247, 0.1);
+}
+
+.pointerIcon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: rotate(15deg);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.mainText {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.1rem;
+  color: #4dabf7;
+}
+
+.fileType {
+  font-size: 0.75rem;
+  color: #999;
+  font-weight: normal;
+  margin-bottom: 0;
+}
+
+.fileFormat {
+  font-size: 0.7rem;
+  color: #aaa;
+  font-weight: normal;
+}
+
+.fileInput {
+  display: none;
+}
+
+.error {
+  color: #f44336;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  max-width: 80%;
+}
+
+@media (prefers-color-scheme: dark) {
+  .uploadZone {
+    border-color: #444;
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  .uploadZone:hover {
+    border-color: #a855f7;
+    background-color: rgba(168, 85, 247, 0.05);
+  }
+
+  .dragging {
+    border-color: #a855f7;
+    background-color: rgba(168, 85, 247, 0.1);
+  }
+
+  .icon {
+    color: #a855f7;
+  }
+
+  .fileType {
+    color: #aaa;
+  }
+
+  .error {
+    color: #ef9a9a;
+  }
+}
