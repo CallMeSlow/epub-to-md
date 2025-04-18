@@ -18,9 +18,9 @@ const nextConfig = {
     unoptimized: true,
   },
   // 添加 trailingSlash 配置
-  trailingSlash: true,
+  trailingSlash: false,
   // 确保生成正确的资源路径
-  assetPrefix: './',
+  // assetPrefix: './',
 };
 
 module.exports = nextConfig;
