@@ -228,31 +228,19 @@ export class MarkdownConverter {
 
     // Handle code blocks better
     this.turndownService.addRule('codeBlocks', {
-      filter: function(node) {
-        return (
-          node.nodeName === 'PRE' &&
-          node.firstChild &&
-          node.firstChild.nodeName === 'CODE'
-        );
-      },
-      replacement: function(content, node) {
-        const code = node.textContent || '';
-        const language = node.getAttribute('data-language') || '';
-        return '\n\n```' + language + '\n' + code.trim() + '\n```\n\n';
+      filter: ['pre'],
+      replacement: function(content) {
+        // 简化处理，直接返回代码块
+        return '\n\n```\n' + content.trim() + '\n```\n\n';
       }
     });
 
     // Handle footnotes
     this.turndownService.addRule('footnotes', {
-      filter: function(node) {
-        return (
-          node.nodeName === 'SPAN' &&
-          node.classList.contains('footnote')
-        );
-      },
-      replacement: function(content, node) {
-        const id = node.getAttribute('id') || '';
-        return '[^' + id + ']';
+      filter: ['span'],
+      replacement: function() {
+        // 简化处理，返回通用脚注标记
+        return '[^]';
       }
     });
   }
